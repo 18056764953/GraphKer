@@ -183,7 +183,9 @@ def unzip_files_to_directory(zip_path, extract_path, zip_filename):
             file_to_delete = f'{extract_path}' + f'\\{zip_filename}'
         os.remove(file_to_delete)
     except zipfile.BadZipfile as e:
-        print("Error while unzipping data" + e)
+        # print("Error while unzipping data" + e)
+         print("Error while unzipping data: " + str(e))
+
 
 def transform_xml_files_to_json(path):
     directory_contents = os.listdir(path)

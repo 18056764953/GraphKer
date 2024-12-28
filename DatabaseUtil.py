@@ -15,6 +15,7 @@ class DatabaseUtil:
         for label in labels:
             print(f"Deleting {label}")
             query = "CALL apoc.periodic.iterate('MATCH (n:" + label + ") RETURN n', 'DETACH DELETE n', {batchSize:2000})"
+            #print("Test：query= "+query)
             try:
                 with self.driver.session() as session:
                     session.run(query)
@@ -35,9 +36,13 @@ class DatabaseUtil:
         print(f"\Start cleaning Data from existing constraints and indexes")
         start_time = time.time()
         query = """CALL apoc.cypher.runSchemaFile("ClearConstraintsIndexes.cypher")"""
+        print("test：query= "+query)
+
         try:
             with self.driver.session() as session:
                 session.run(query)
+            #self.driver.session().run(query)
+            print("test：query= "+query)
         except exceptions.CypherError as e:
             print(f"CypherError: {e}")
         end_time = time.time()

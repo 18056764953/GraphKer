@@ -7,6 +7,7 @@ class CAPECInserter:
     def __init__(self, driver, import_path):
         self.driver = driver
         self.import_path = import_path
+        #print(f"import_path is set to: {self.import_path}")  # 打印路径
 
     # Cypher Query to insert CAPEC refrence Cypher Script
     def query_capec_reference_script(self, file):
@@ -16,7 +17,7 @@ class CAPECInserter:
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
+        except exceptions.ClientError as e:
             print(f"CypherError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
@@ -35,7 +36,7 @@ class CAPECInserter:
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
+        except exceptions.ClientError as e:
             print(f"CypherError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
@@ -55,7 +56,7 @@ class CAPECInserter:
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
+        except exceptions.ClientError as e:
             print(f"CypherError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
@@ -75,7 +76,7 @@ class CAPECInserter:
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
+        except exceptions.ClientError as e:
             print(f"CypherError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
@@ -135,7 +136,7 @@ class CAPECInserter:
                 else:
                     continue
 
-        return attack_pattern_files
+        return attack_pattern_files 
 
     # Define which Dataset and Cypher files will be imported on CAPEC category Insertion
     def files_to_insert_capec_category(self):

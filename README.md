@@ -110,6 +110,7 @@ _3 + 1 Steps to run GraphKer Tool_
 ```
 // Default
 python main.py -u BOLT_URL -n USERNAME -p PASSWORD -d IMPORT_PATH
+python main.py -u bolt://localhost:7687 -n neo4j -p neo4j123456 -d IMPORT_PATH
 // Run and Open Neo4j Browser
 python main.py -u BOLT_URL -n USERNAME -p PASSWORD -d IMPORT_PATH -b y
 // Run and Open Graphlytic App

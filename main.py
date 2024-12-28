@@ -17,21 +17,22 @@ def run(url_db, username, password, directory, neo4jbrowser, graphlytic):
 
         import_path = Util.set_import_path(directory)
 
-        Util.clear_directory(import_path)
-        scraper.download_datasets(import_path)
-
-        Util.copy_files_cypher_script(import_path)
+        #Util.clear_directory(import_path)   # 清空IMPORT_PATH文件夹内容
+        #scraper.download_datasets(import_path)  # 下载网上数据至IMPORT_PATH文件夹
+        Util.copy_files_cypher_script(import_path)  # 复制CyhperScripts所有文件至IMPORT_PATH文件夹（代码有改动）
 
         driver = GraphDatabase.driver(url_db, auth=(username, password))
 
+        # 初始化对象，仅仅是将driver，import_path变量传给新对象
         cpeInserter = CPEInserter(driver, import_path)
         cveInserter = CVEInserter(driver, import_path)
         cweInserter = CWEInserter(driver, import_path)
         capecInserter = CAPECInserter(driver, import_path)
         databaseUtil = DatabaseUtil(driver)
 
-        databaseUtil.clear()
+        databaseUtil.clear()    # 清空neo4j数据库中的指定节点和关系，疑似功能有问题
         databaseUtil.schema_script()
+        """ 
         cpeInserter.cpe_insertion()
         capecInserter.capec_insertion()
         cveInserter.cve_insertion()
@@ -42,7 +43,7 @@ def run(url_db, username, password, directory, neo4jbrowser, graphlytic):
         end_time = time.time()
 
         execution_time = end_time - start_time
-        print(f"Import finished in: {execution_time:.6f} seconds")
+        print(f"Import finished in: {execution_time:.6f} seconds") """
 
     except Exception as e:
         print(f"Error occurred: {e}")
@@ -50,8 +51,10 @@ def run(url_db, username, password, directory, neo4jbrowser, graphlytic):
 
     if neo4jbrowser:
         webbrowser.open("http://localhost:7474")
+        #webbrowser.open("http://192.168.56.101:7474")
     if graphlytic:
         webbrowser.open("http://localhost:8110/")
+        #webbrowser.open("http://192.168.56.101:8110")
     return
 
 
@@ -93,7 +96,7 @@ def main():
         graphlytic_open = True
     else:
         graphlytic_open = False
-    run(args.urldb, args.username, args.password,
+    run(args.urldb, args.username, args.password, 
         args.directory, neo4jbrowser_open, graphlytic_open)
     return
 
